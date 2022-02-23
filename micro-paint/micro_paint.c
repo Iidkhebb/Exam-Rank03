@@ -21,14 +21,6 @@ int ft_putstr(char *s)
 	}
 	return 1;
 }
-void ft_putstr_2(char *s)
-{
-	while (*s)
-	{
-		write(1, s++, 1);
-	}
-	write(1, "\n", 1);
-}
 
 int draw(void)
 {
@@ -57,12 +49,14 @@ int main(int ac, char **av)
 	ret = fscanf(file, "%d %d %c\n", &bg_with, &bg_high, &bg_c);
 	if (ret != 3 || bg_high <= 0 || bg_high > 300 || bg_with <= 0 || bg_with > 300)
 		return(ft_putstr(FILE_OCC));
+
 	zone = calloc(bg_with, sizeof(char *));
 	for (int y = 0; y < bg_high; y++)
 	{
 		zone[y] = calloc(bg_with + 1, 1);
 		memset(zone[y], bg_c, bg_with);
 	}
+
 	while ((ret = fscanf(file, "%c %f %f %f %f %c\n", &type, &rect_pos_with, &rect_pos_high, &rect_with, &rect_high, &rect_c)) != -1)
 	{
 		if (ret != 6 || draw() == -1)
@@ -70,7 +64,9 @@ int main(int ac, char **av)
 	}
 	for (int i = 0; i < bg_high; i++)
 	{
-		ft_putstr_2(zone[i]);
+		ft_putstr(zone[i]);
+		ft_putstr("\n");
 	}
+	return 0;
 }
 
